@@ -4,7 +4,7 @@ Created on Sat Oct 19 13:46:49 2013
 
 @author: Gauden Galea
 """
-from __future__ import division
+from __future__ import division, print_function
 from math import ceil
 
 from hfa.importer import DataImporter
@@ -43,13 +43,17 @@ countries = IDX.get_countries(names=countries)
 comparators = ['European Region']
 comparators = IDX.get_countries(names=comparators)
 
-indicators = ['1320']
+indicators = ['1021']
 indicators = IDX.get_indicators(ids=indicators)
 
 PLOT = dict(countries=countries,
             comparators=comparators,
             start=None,
             end=None,
+            ymin=50,
+            ymax=85,
+            xmin=1970,
+            xmax=2012,
             indicator=indicators,
             dpi=75,
             width=960,
@@ -67,28 +71,29 @@ plt.rc('font', **{'sans-serif': ['Helvetica', 'Arial'],
 # Facet-drawing functions
 
 
-def get_country_name(r, c, lang):
-    facet = r * PLOT['cols'] + c
-    return PLOT['countries'].ix[facet][lang]
+def get_country_name(row, col, language):
+    facet = row * PLOT['cols'] + col
+    return PLOT['countries'].ix[facet][language]
 
 
-def draw_facet(ax, lang, series, r, c):
-    for fun, x, y in series:
-        fun(ax, x, y, alpha=1)
-    facet_title = get_country_name(r, c, lang)
-    ax.set_title(facet_title)
-    ax.set_ylim(0, 900)
-    ax.set_xlim(1970, 2013)
-    start, end = ax.get_xlim()
-    ax.xaxis.set_ticks(np.arange(start, end, 10))
+def draw_facet(axis, language, series_list, row, col):
+    for fun, x, y, kwargs in series_list:
+        fun(axis, x, y, **kwargs)
+    facet_title = get_country_name(row, col, language)
+    axis.set_title(facet_title)
+    axis.set_ylim(PLOT['ymin'], PLOT['ymax'])
+    axis.set_xlim(PLOT['xmin'], PLOT['xmax'])
+    start, end = axis.get_xlim()
+    axis.xaxis.set_ticks(np.arange(start, end, 10))
     if not (facet_no in [0, 4, 8]):
-        plt.setp(ax.get_yticklabels(), visible=False)
+        plt.setp(axis.get_yticklabels(), visible=False)
     if not (facet_no in [8, 9, 10, 11]):
-        plt.setp(ax.get_xticklabels(), visible=False)
+        plt.setp(axis.get_xticklabels(), visible=False)
 
 
-def get_country_series(indicator, country):
-    data = HFA[(HFA.indicator == indicator) & (HFA.country == country)]
+def get_country_series(series_indicator, series_country):
+    data = HFA[(HFA.indicator == series_indicator) & (HFA.country == series_country)]
+    data.sort('year', inplace=True)
     y = data.value
     x = data.year
     return x, y
@@ -125,15 +130,14 @@ for lang in ['en', 'ru']:
     comp_country = PLOT['comparators'].ix[0]['en']
     x_comp, y_comp = [list(series) for series in get_country_series(indicator, comp_country)]
     for facet_no in range(len(countries)):
-        r = int(facet_no / cols)
-        c = facet_no % cols
-        ax = axarr[r, c]
+        row = int(facet_no / cols)
+        col = facet_no % cols
+        ax = axarr[row, col]
         country = PLOT['countries'].ix[facet_no]['en']
         x_focus, y_focus = get_country_series(indicator, country)
-        series = [(ppl.scatter, x_comp, y_comp),
-                  (ppl.scatter, list(x_focus), list(y_focus))]
-        draw_facet(ax, lang, series, r, c)
+        series = [(ppl.plot, x_comp, y_comp, dict(linewidth=3)),
+                  (ppl.plot, x_focus, y_focus, dict(linewidth=3))]
+        draw_facet(ax, lang, series, row, col)
 
-    plt.ylim([0, 1000])
     # Show and save the whole thing
     f.savefig('{}_{}.png'.format(indicator, lang))
