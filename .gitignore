@@ -1,0 +1,6 @@
+# Compiled files
+*.pyc
+*.png
+
+# Folders
+.idea
