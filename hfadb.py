@@ -6,6 +6,7 @@ Created on Sat Oct 19 13:46:49 2013
 """
 from __future__ import division, print_function
 from math import ceil
+import os
 
 from hfa.importer import DataImporter
 from hfa.indices import HFAIndex
@@ -23,18 +24,17 @@ IDX = HFAIndex()
 # -----------------------------------------------
 # SET UP THE PLOTTING PARAMETERS
 
-countries = sorted(['Russian Federation',
-                    'Poland',
-                    'Germany',
-                    'Denmark',
-                    'Sweden',
-                    'Latvia',
-                    'Lithuania',
-                    'Estonia',
-                    'Norway',
-                    'Iceland',
-                    'Belarus',
-                    'Finland', ])
+countries = sorted(['Albania',
+                    'Bosnia and Herzegovina',
+                    'Bulgaria',
+                    'Croatia',
+                    'Montenegro',
+                    'Republic of Moldova',
+                    'Romania',
+                    'Serbia',
+                    'TFYR Macedonia',
+                    'Israel',
+                    'Slovenia', ])
 
 countries = IDX.get_countries(names=countries)
 #print COUNTRIES.ix[0]['ru']
@@ -43,15 +43,16 @@ countries = IDX.get_countries(names=countries)
 comparators = ['European Region']
 comparators = IDX.get_countries(names=comparators)
 
-indicators = ['1021']
+indicators = ['1360']
 indicators = IDX.get_indicators(ids=indicators)
+
 
 PLOT = dict(countries=countries,
             comparators=comparators,
             start=None,
             end=None,
-            ymin=50,
-            ymax=85,
+            ymin=0,
+            ymax=350,
             xmin=1970,
             xmax=2012,
             indicator=indicators,
@@ -140,4 +141,6 @@ for lang in ['en', 'ru']:
         draw_facet(ax, lang, series, row, col)
 
     # Show and save the whole thing
-    f.savefig('{}_{}.png'.format(indicator, lang))
+    fn = '{}_{}.png'.format(indicator, lang)
+    fn = os.path.join('img', fn)
+    f.savefig(fn)
