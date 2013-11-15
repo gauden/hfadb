@@ -12,7 +12,8 @@ countries:
 - Slovenia
 
 comparators:
-- European Region
+- Eur-A
+- Eur-B+C
 
 indicators: 1360
 
