@@ -13,7 +13,6 @@ from hfa.importer import DataImporter
 from hfa.indices import HFAIndex
 from hfa.plot import Plot
 
-
 YAML_DIR = os.path.join('yaml')
 
 
@@ -35,8 +34,8 @@ def main():
     if plot_specs:
         for specs in plot_specs:
             plot = Plot(specs, index, hfa_db)
-            print(plot)
-            plot.render()  # TODO
+            plot.render()
+            #print(plot)
     print('Run completed.')
 
 

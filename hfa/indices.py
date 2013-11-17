@@ -25,6 +25,23 @@ class HFAIndex(object):
     def __init__(self, data_dir=os.path.join('.', 'hfa', 'index_data')):
         self.data = Extractor(data_dir).data
 
+    def __getitem__(self, item):
+        try:
+            if int(item):
+                item = unicode(item)
+                result = self.get_indicators(ids=[item])
+                return result
+        except:
+            return None
+
+    def get_countries(self, names=[], ids=[], lang=None):
+        # TODO BUG -- can only handle ONE id -- amend the _get_subset() method
+        return self.get_subset(names, ids, lang, index_type='countries')
+
+    def get_indicators(self, names=[], ids=[], lang=None):
+        # TODO BUG -- can only handle ONE id -- amend the _get_subset() method
+        return self.get_subset(names, ids, lang, index_type='indicators')
+
     def get_subset(self,
                    names=[],
                    ids=[],
@@ -68,12 +85,6 @@ class HFAIndex(object):
         if lang:
             result = result[lang]
         return result
-
-    def get_countries(self, names=[], ids=[], lang=None):
-        return self.get_subset(names, ids, lang, index_type='countries')
-
-    def get_indicators(self, names=[], ids=[], lang=None):
-        return self.get_subset(names, ids, lang, index_type='indicators')
 
     def find_indicators(self, needle):
         '''
@@ -169,6 +180,9 @@ def main():
     print IDX.get_countries(ids=['0006', '0001'], names=['Albania', 'Azerbaijan', 'France'])
     print '''\n\nIDX.get_indicators(ids=['1320'])'''
     print IDX.get_indicators(ids=['1320'])
+    print '=' * 50
+    print IDX['1320']
+    assert(IDX['abc'] == None)
 
 
 if __name__ == '__main__':

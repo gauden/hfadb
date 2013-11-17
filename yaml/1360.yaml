@@ -1,3 +1,11 @@
+type: Small multiples
+
+datasource:
+    en: http://data.euro.who.int/hfadb/
+    ru: http://data.euro.who.int/hfadb/
+
+indicator: 1320
+
 countries:
 - Albania
 - Bosnia and Herzegovina
@@ -15,16 +23,14 @@ comparators:
 - Eur-A
 - Eur-B+C
 
-indicators: 1360
-
-start: None
-end: None
+start: 1980
+end: 2012
 
 ymin: 0
-ymax: 350
-xmin: 1970
-xmax: 2012
+ymax:
+xmin:
+xmax:
 dpi: 75
 width: 960
 height: 617
-cols: 4
+color: green

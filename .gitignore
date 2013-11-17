@@ -1,6 +1,9 @@
 # Compiled files
 *.pyc
 *.png
+*.extra
+tmp.py
 
 # Folders
 .idea
+hfa/*.pyc
