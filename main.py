@@ -16,15 +16,24 @@ from hfa.plot import Plot
 YAML_DIR = os.path.join('yaml')
 
 
+def read_yaml_file(yaml_file):
+    with open(yaml_file, 'rb') as f:
+        specs = yaml.load(f.read())
+        print('Processed: {}'.format(yaml_file))
+    return specs
+
+
 def get_yaml():
     plots = []
+    basic_config = read_yaml_file(os.path.join(YAML_DIR, "config.yaml"))
     files = [f for f in glob.glob(os.path.join(YAML_DIR, "*.yaml"))]
     if files:
         for yaml_file in files:
-            with open(yaml_file, 'rb') as f:
-                specs = yaml.load(f.read())
-                plots.append(specs)
-                print('Processed: {}'.format(yaml_file))
+            if 'config' not in yaml_file:
+                specs = read_yaml_file(yaml_file)  # read specific config
+                final = basic_config.copy()  # merge it with general config
+                final.update(specs)
+                plots.append(final)  # add final result to list of plots
     return plots
 
 def main():
