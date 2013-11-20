@@ -14,12 +14,13 @@ xmax:
 dpi: 96
 width: 960
 height: 617
-color: steelblue
+color: red
 
 countries:
-- seehn
-- Slovenia
-
-comparators:
+- CIS
+- CARK
 - Eur-A
 - Eur-B+C
+
+comparators:
+- European Region

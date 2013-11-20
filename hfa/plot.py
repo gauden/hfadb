@@ -127,13 +127,16 @@ class SmallMultipleChart(object):
         """
         Private function to calculate optimal layout of the grid,
         with one facet for each country in the dataset.
+        Allows a maximum of 100 x 99 facets -- it is up to the user
+        to ensure that the size of the plot, labels, etc, are
+        proportionate.
 
         @return: tuple (rows, cols).
         """
         #if facets > 20:
         #    raise IndexError('This type of graph cannot have more than 20 facets.')
-        for cols in range(1, 6):
-            for rows in range(1, 5):
+        for cols in range(1, 100):
+            for rows in range(1, 99):
                 if (cols * rows >= facets
                     and cols - rows < 3
                     and cols >= rows):
