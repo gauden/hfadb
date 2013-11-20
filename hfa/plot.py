@@ -130,8 +130,8 @@ class SmallMultipleChart(object):
 
         @return: tuple (rows, cols).
         """
-        if facets > 20:
-            raise IndexError('This type of graph cannot have more than 20 facets.')
+        #if facets > 20:
+        #    raise IndexError('This type of graph cannot have more than 20 facets.')
         for cols in range(1, 6):
             for rows in range(1, 5):
                 if (cols * rows >= facets

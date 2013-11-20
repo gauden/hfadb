@@ -14,6 +14,7 @@ from hfa.indices import HFAIndex
 from hfa.plot import Plot
 
 YAML_DIR = os.path.join('yaml')
+IDX_DIR = os.path.join('hfa', 'index_data')
 
 
 def read_yaml_file(yaml_file):
@@ -21,6 +22,17 @@ def read_yaml_file(yaml_file):
         specs = yaml.load(f.read())
         print('Processed: {}'.format(yaml_file))
     return specs
+
+
+def expand_country_sets(countries):
+    result = []
+    country_sets = read_yaml_file(os.path.join(IDX_DIR, 'country_sets.yaml'))
+    for idx in countries:
+        if idx in country_sets:
+            result.extend(country_sets[idx])
+        else:
+            result.append(idx)
+    return result
 
 
 def get_yaml():
@@ -33,6 +45,7 @@ def get_yaml():
                 specs = read_yaml_file(yaml_file)  # read specific config
                 final = basic_config.copy()  # merge it with general config
                 final.update(specs)
+                final['countries'] = expand_country_sets(final['countries'])
                 plots.append(final)  # add final result to list of plots
     return plots
 

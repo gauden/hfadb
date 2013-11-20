@@ -6,4 +6,6 @@ tmp.py
 
 # Folders
 .idea
+.idea_bup
 hfa/*.pyc
+tmp

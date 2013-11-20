@@ -1,0 +1,153 @@
+averages:
+    -  European Region
+    -  EU
+    -  EU members before May 2004
+    -  EU members since May 2004
+    -  CIS
+    -  CARK
+    -  Eur-A
+    -  Eur-B+C
+eu:
+    -  Austria
+    -  Belgium
+    -  Bulgaria
+    -  Croatia
+    -  Cyprus
+    -  Czech Republic
+    -  Denmark
+    -  Estonia
+    -  Finland
+    -  France
+    -  Germany
+    -  Greece
+    -  Hungary
+    -  Ireland
+    -  Italy
+    -  Latvia
+    -  Lithuania
+    -  Luxembourg
+    -  Malta
+    -  Netherlands
+    -  Poland
+    -  Portugal
+    -  Romania
+    -  Slovakia
+    -  Slovenia
+    -  Spain
+    -  Sweden
+    -  United Kingdom
+eu_old:
+    -  Austria
+    -  Belgium
+    -  Denmark
+    -  Finland
+    -  France
+    -  Germany
+    -  Greece
+    -  Ireland
+    -  Italy
+    -  Luxembourg
+    -  Netherlands
+    -  Portugal
+    -  Spain
+    -  Sweden
+    -  United Kingdom
+eu_new:
+    -  Bulgaria
+    -  Croatia
+    -  Cyprus
+    -  Czech Republic
+    -  Estonia
+    -  Hungary
+    -  Latvia
+    -  Lithuania
+    -  Malta
+    -  Poland
+    -  Romania
+    -  Slovakia
+    -  Slovenia
+cis:
+    -  Armenia
+    -  Azerbaijan
+    -  Belarus
+    -  Georgia
+    -  Kazakhstan
+    -  Kyrgyzstan
+    -  Republic of Moldova
+    -  Russian Federation
+    -  Tajikistan
+    -  Turkmenistan
+    -  Ukraine
+    -  Uzbekistan
+cark:
+    -  Kazakhstan
+    -  Kyrgyzstan
+    -  Tajikistan
+    -  Turkmenistan
+    -  Uzbekistan
+eur-a:
+    -  Andorra
+    -  Austria
+    -  Belgium
+    -  Croatia
+    -  Cyprus
+    -  Czech Republic
+    -  Denmark
+    -  Finland
+    -  France
+    -  Germany
+    -  Greece
+    -  Iceland
+    -  Ireland
+    -  Israel
+    -  Italy
+    -  Luxembourg
+    -  Malta
+    -  Monaco
+    -  Netherlands
+    -  Norway
+    -  Portugal
+    -  San Marino
+    -  Slovenia
+    -  Spain
+    -  Sweden
+    -  Switzerland
+    -  United Kingdom
+eur-b+c:
+    -  Albania
+    -  Armenia
+    -  Azerbaijan
+    -  Belarus
+    -  Bosnia and Herzegovina
+    -  Bulgaria
+    -  Estonia
+    -  Georgia
+    -  Hungary
+    -  Kazakhstan
+    -  Kyrgyzstan
+    -  Latvia
+    -  Lithuania
+    -  Montenegro
+    -  Poland
+    -  Republic of Moldova
+    -  Romania
+    -  Russian Federation
+    -  Serbia
+    -  Slovakia
+    -  Tajikistan
+    -  TFYR Macedonia
+    -  Turkey
+    -  Turkmenistan
+    -  Ukraine
+    -  Uzbekistan
+seehn:
+    - Albania
+    - Bosnia and Herzegovina
+    - Bulgaria
+    - Croatia
+    - Israel
+    - Montenegro
+    - Republic of Moldova
+    - Romania
+    - Serbia
+    - TFYR Macedonia
