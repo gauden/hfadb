@@ -36,17 +36,21 @@ class SmallMultipleChart(object):
             self._save_fig(figure, title, lang)
 
     def _get_axis_limits(self):
-        xmin = self.plot.specs.get('start', None)
-        if not xmin:
+        xmin = self.plot.specs.get('xmin', '')
+        if xmin != '':
             xmin = self.plot.data.year.min()
 
-        xmax = self.plot.specs.get('end', None)
-        if not xmax:
+        xmax = self.plot.specs.get('xmax', '')
+        if xmax != '':
             xmax = self.plot.data.year.max()
         self.plot.specs['xlim'] = (xmin, xmax)
 
-        ymin = 100 * int((self.plot.data.value.min() - 95) / 100)
-        ymax = 100 * int((self.plot.data.value.max() + 95) / 100)
+        ymin = self.plot.specs.get('ymin', '')
+        if ymin == '':
+            ymin = 100 * int((self.plot.data.value.min() - 95) / 100)
+        ymax = self.plot.specs.get('ymax', '')
+        if ymax == '':
+            ymax = 100 * int((self.plot.data.value.max() + 95) / 100)
         self.plot.specs['ylim'] = (ymin, ymax)
 
     def _render_axes(self, ax_array, lang):
@@ -74,16 +78,24 @@ class SmallMultipleChart(object):
                     fontsize=10, fontweight='bold')
 
             ax.set_ylim(self.plot.specs['ylim'])
+            if self.plot.specs.get('ystep', None):
+                ax.yaxis.set_ticks(np.arange(self.plot.specs['ylim'][0], 
+                                             self.plot.specs['ylim'][1], 
+                                             self.plot.specs['ystep']))
 
             start, end = self.plot.specs['xlim']
-            ax.xaxis.set_ticks(np.arange(start, end, 10))
+            if self.plot.specs.get('xstep', None):
+                ax.xaxis.set_ticks(np.arange(self.plot.specs['xlim'][0], 
+                                             self.plot.specs['xlim'][1], 
+                                             self.plot.specs['xstep']))
             for tick in ax.xaxis.get_major_ticks():
                 tick.label.set_fontsize(10)
             for tick in ax.yaxis.get_major_ticks():
                 tick.label.set_fontsize(10)
 
             # Draw in-focus series: strong colour and opaque
-            ppl.plot(ax, x, y, alpha=1.0, linewidth=4, color=self.plot.specs.get('color', None))
+            ppl.plot(ax, x, y, alpha=1.0, linewidth=1, color=self.plot.specs.get('color', None))
+            ppl.scatter(ax, x, y, s=12.0, alpha=1.0, color=self.plot.specs.get('color', None))
 
             # Draw comparators: light, translucent, overlapping main series
             for x_comp, y_comp in comp_series.values():
@@ -103,6 +115,11 @@ class SmallMultipleChart(object):
         figure.suptitle(title, fontweight='heavy', fontsize=18)
         # Add annotation crediting the source of data at bottom of slide
         figure.text(0.5, 0.02, data_source, fontsize=14, horizontalalignment='center')
+
+        caption = self.plot.specs.get('caption', None)
+        if caption:
+            figure.text(caption['x'], caption['y'], 
+                        caption[lang], fontsize=caption['size'])
 
         return figure, title
 
@@ -157,7 +174,9 @@ class SmallMultipleChart(object):
 
     def _save_fig(self, figure, title, lang):
         # Show and save the whole thing
-        fn = '{}_{}.png'.format(self.plot.specs['indicator'], lang)
+        stub = self.plot.specs.get('filename', '')
+        stub = stub if stub else self.plot.specs['indicator']
+        fn = '{}_{}.png'.format(stub, lang)
         fn = os.path.join('img', fn)
         figure.savefig(fn)
 
@@ -183,8 +202,8 @@ class Plot(object):
         countries = self.specs.get('countries', [])
         comparators = self.specs.get('comparators', [])
         all_countries = countries + comparators
-        end = self.specs.get('end', None)
-        start = self.specs.get('start', None)
+        end = self.specs.get('xmax', None)
+        start = self.specs.get('xmin', None)
         dataset = self._get_plot_data(all_countries,
                                       indicator,
                                       start,

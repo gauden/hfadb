@@ -32,7 +32,7 @@ def expand_country_sets(countries):
             result.extend(country_sets[idx])
         else:
             result.append(idx)
-    return result
+    return set(result)
 
 
 def get_yaml():
@@ -43,9 +43,12 @@ def get_yaml():
         for yaml_file in files:
             if 'config' not in yaml_file:
                 specs = read_yaml_file(yaml_file)  # read specific config
-                final = basic_config.copy()  # merge it with general config
+                final = basic_config.copy() if basic_config else dict() # merge it with general config
                 final.update(specs)
                 final['countries'] = expand_country_sets(final['countries'])
+                # TODO generalise this
+                if final['indicator'] == 176:
+                    final['indicator'] = '0260'
                 plots.append(final)  # add final result to list of plots
     return plots
 

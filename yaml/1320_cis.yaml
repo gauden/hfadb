@@ -1,0 +1,29 @@
+indicator: 1320
+
+type: Small multiples
+
+datasource:
+    en: http://data.euro.who.int/hfadb/
+    ru: http://data.euro.who.int/hfadb/
+
+ymin: 0
+ymax: 1000
+ystep: 200
+
+xmin: 1980
+xmax: 2012
+xstep: 10
+
+dpi: 96
+width: 960
+height: 602
+color: red
+
+countries:
+- cis
+- cark
+
+comparators:
+- European Region
+
+filename: 1320_cis

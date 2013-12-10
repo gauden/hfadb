@@ -1,0 +1,30 @@
+indicator: 0260
+
+type: Small multiples
+
+datasource:
+    en: http://data.euro.who.int/hfadb/
+    ru: http://data.euro.who.int/hfadb/
+
+ymin: 0
+ymax: 80000
+ystep: 20000
+
+xmin: 1998
+xmax: 2012
+xstep: 5
+
+dpi: 96
+width: 960
+height: 602
+color: steelblue
+
+countries:
+- eur-a
+- eu
+- Turkey
+
+comparators:
+- 
+
+filename: 0260_eura
